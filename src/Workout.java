@@ -1,19 +1,19 @@
 public class Workout {
 
     private final int id;
-    private int memberId;
+    private final int memberId;
     private String type;
     private double distance;
     private int duration;
 
     public  Workout(int id, int memberId, String type, double distance, int duration) {
-        if (id < 0) {
+        if (id <= 0) {
             throw new IllegalArgumentException("id cannot be negative");
         }
 
         this.id = id;
 
-        if (memberId < 0) {
+        if (memberId <= 0) {
             throw new IllegalArgumentException("memberId cannot be negative");
         }
 
@@ -24,6 +24,7 @@ public class Workout {
     }
 
     public Workout(int id, int memberId, String type) {
+
         this(id, memberId, type, 0.0, 30);
     }
 
@@ -40,7 +41,9 @@ public class Workout {
     }
 
     public void setType(String type) {
-
+        if (type == null || type.isBlank()) {
+            throw new IllegalArgumentException("Type is required ");
+        }
 
         this.type = type;
     }
@@ -50,7 +53,7 @@ public class Workout {
     }
 
     public void setDistance(double distance) {
-        if (distance < 0) {
+        if (distance < 0.0) {
             throw new IllegalArgumentException("distance cannot be negative");
         }
 
