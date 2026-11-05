@@ -1,13 +1,13 @@
 public class Member {
 
-    private int id;
+    private final int id;
     private String name;
     private int age;
     private boolean active;
 
     public Member(int id, String name, int age, boolean active) {
 
-        if (id <0) {
+        if (id <= 0) {
             throw new IllegalArgumentException("ID must be greater than 0.");
         }
 
@@ -26,7 +26,7 @@ public class Member {
     }
 
     public void setName(String name) {
-        if (!name.matches("[A-Za-z]+") || name.isBlank()) {
+        if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Invalid name!");
         }
 
