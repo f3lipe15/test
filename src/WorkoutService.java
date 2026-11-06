@@ -54,4 +54,10 @@ public class WorkoutService {
         return workouts.values().stream()
                 .max(Comparator.comparingInt(Workout::getDuration));
     }
+
+    public List<Workout> getWorkoutSortedByDistance() {
+        return workouts.values().stream()
+                .sorted(Comparator.comparingDouble(Workout::getDistance).reversed())
+                .toList();
+    }
 }
