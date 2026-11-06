@@ -60,4 +60,38 @@ public class WorkoutService {
                 .sorted(Comparator.comparingDouble(Workout::getDistance).reversed())
                 .toList();
     }
+
+    public double calculateTotalDistanceForMember(int memberId) {
+
+        List<Workout> memberWorkouts = getWorkoutsByMemberId(memberId);
+
+        return memberWorkouts.stream()
+                .mapToDouble(Workout::getDistance)
+                .sum();
+    }
+
+    public int countWorkoutsForMember(int memberId) {
+
+        List<Workout> memberWorkouts = getWorkoutsByMemberId(memberId);
+
+        return memberWorkouts.size();
+    }
+
+    public double calculateAverageSpeed(Workout workout) {
+
+        double distance = workout.getDistance();
+        int duration = workout.getDuration();
+
+        return calculateAverageSpeed(distance, duration);
+    }
+
+    public double calculateAverageSpeed(double distance, int duration) {
+        if (distance == 0.0) {
+            return 0.0;
+        }
+
+        double averageSpeed = distance / (duration/60.0);
+
+        return averageSpeed;
+    }
 }
