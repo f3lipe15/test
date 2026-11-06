@@ -26,7 +26,7 @@ public class Member {
     }
 
     public void setName(String name) {
-        if (name == null || name.isEmpty()) {
+        if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Invalid name!");
         }
 

@@ -4,6 +4,13 @@ public class WorkoutService {
 
     private final Map<Integer, Workout> workouts = new HashMap<>();
 
+    private final FitnessClubService fitnessClubService;
+
+    public WorkoutService(FitnessClubService fitnessClubService) {
+        this.fitnessClubService =
+                Objects.requireNonNull(fitnessClubService);
+    }
+
     public void addWorkout(Workout workout) {
 
         if (workout == null) {
@@ -13,6 +20,11 @@ public class WorkoutService {
         if (workouts.containsKey(workout.getId())) {
             throw new IllegalArgumentException("Workout already exists!");
         }
+
+        fitnessClubService.findMemberById(workout.getMemberId())
+                .orElseThrow(() -> new NoSuchElementException(
+                        "Member not found: " + workout.getMemberId()
+                ));
 
         workouts.put(workout.getId(), workout);
     }
@@ -62,6 +74,10 @@ public class WorkoutService {
     }
 
     public double calculateTotalDistanceForMember(int memberId) {
+        fitnessClubService.findMemberById(memberId)
+                .orElseThrow(() -> new NoSuchElementException(
+                        "Member not found: " + memberId
+                ));
 
         List<Workout> memberWorkouts = getWorkoutsByMemberId(memberId);
 
@@ -71,6 +87,10 @@ public class WorkoutService {
     }
 
     public int countWorkoutsForMember(int memberId) {
+        fitnessClubService.findMemberById(memberId)
+                .orElseThrow(() -> new NoSuchElementException(
+                        "Member not found: " + memberId
+                ));
 
         List<Workout> memberWorkouts = getWorkoutsByMemberId(memberId);
 
@@ -78,20 +98,21 @@ public class WorkoutService {
     }
 
     public double calculateAverageSpeed(Workout workout) {
+        Objects.requireNonNull(workout, "Workout cannot be null!");
 
-        double distance = workout.getDistance();
-        int duration = workout.getDuration();
-
-        return calculateAverageSpeed(distance, duration);
+        return calculateAverageSpeed(workout.getDistance(), workout.getDuration());
     }
 
     public double calculateAverageSpeed(double distance, int duration) {
-        if (distance == 0.0) {
-            return 0.0;
+
+        if (!Double.isFinite(distance) || distance < 0) {
+            throw new IllegalArgumentException("Invalid distance!");
         }
 
-        double averageSpeed = distance / (duration/60.0);
+        if (duration <= 0) {
+            throw new IllegalArgumentException("Invalid duration!");
+        }
 
-        return averageSpeed;
+        return distance / (duration / 60.0);
     }
 }

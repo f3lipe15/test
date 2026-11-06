@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) {
 
         FitnessClubService fitnessClubService = new FitnessClubService();
-        WorkoutService workoutService = new WorkoutService();
+        WorkoutService workoutService = new WorkoutService(fitnessClubService);
 
 
 
@@ -44,7 +44,7 @@ public class Main {
                 System.out.println(member.getId() + " | "
                         + member.getName() + " | "
                         + member.getAge() + " | "
-                        + member.isActive()));
+                        + (member.isActive() ? "Active" : "Inactive")));
 
         System.out.println("\nActive members: " + fitnessClubService.countActiveMembers());
 
@@ -52,15 +52,31 @@ public class Main {
         workouts.forEach(workout ->
                 System.out.println(workout.getId() + " | "
                 + workout.getType() + " | "
-                + workout.getDistance() + " | "
-                + workout.getDuration() + " | "));
+                + workout.getDistance() + " km | "
+                + workout.getDuration() + " min | "));
 
         System.out.println("\nSTATISTICS:");
 
         System.out.println("Total distance: " + workoutService.calculateTotalDistance() + " km");
         System.out.println("Average duration: " + workoutService.calculateAverageDuration() + " min");
-        System.out.println("Longest workout: " + workoutService.findLongestWorkout());
+        workoutService.findLongestWorkout()
+                .ifPresentOrElse(
+                        workout -> System.out.println(
+                                "Longest workout: " +
+                                        workout.getType() +
+                                        " (" + workout.getDuration() + " min)"
+                        ),
+                        () -> System.out.println("No workouts found")
+                );
 
+        Member member = fitnessClubService
+                .findMemberById(1)
+                .orElseThrow();
+
+        System.out.println("\nMEMBER #1 STATISTICS:");
+        System.out.println("Name: " + member.getName()
+                + "\nWorkouts :" + workoutService.countWorkoutsForMember(1)
+                + "\nTotal distance: " + workoutService.calculateTotalDistanceForMember(1));
 
 
 
