@@ -35,10 +35,34 @@ public class Main {
                 new Workout(4, 3, "Gym", 0.0, 60)
         );
 
-        System.out.println(fitnessClubService.getActiveMembers());
-        System.out.println(workoutService.getWorkoutsLongerThan(50));
-        System.out.println(workoutService.calculateTotalDistance());
-        System.out.println(workoutService.calculateTotalDistanceForMember(1));
-        System.out.println(workoutService.calculateAverageSpeed(40.0, 50));
+        List<Member> members = fitnessClubService.getAllMembers();
+        List<Workout> workouts = workoutService.getAllWorkouts();
+
+        System.out.println("===== FITNESS CLUB MANAGER =====");
+        System.out.println("\nMembers:");
+        members.forEach(member ->
+                System.out.println(member.getId() + " | "
+                        + member.getName() + " | "
+                        + member.getAge() + " | "
+                        + member.isActive()));
+
+        System.out.println("\nActive members: " + fitnessClubService.countActiveMembers());
+
+        System.out.println("\nWorkouts: ");
+        workouts.forEach(workout ->
+                System.out.println(workout.getId() + " | "
+                + workout.getType() + " | "
+                + workout.getDistance() + " | "
+                + workout.getDuration() + " | "));
+
+        System.out.println("\nSTATISTICS:");
+
+        System.out.println("Total distance: " + workoutService.calculateTotalDistance() + " km");
+        System.out.println("Average duration: " + workoutService.calculateAverageDuration() + " min");
+        System.out.println("Longest workout: " + workoutService.findLongestWorkout());
+
+
+
+
     }
 }
