@@ -33,7 +33,7 @@ public class WorkoutService {
         }
 
         return workouts.values().stream()
-                .filter(workout -> workout.getDuration() < minutes)
+                .filter(workout -> workout.getDuration() > minutes)
                 .toList();
     }
 

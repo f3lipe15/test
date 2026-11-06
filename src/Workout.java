@@ -19,8 +19,8 @@ public class Workout {
 
         this.memberId = memberId;
         this.type = type;
-        this.distance = distance;
-        this.duration = duration;
+        setDistance(distance);
+        setDuration(duration);
     }
 
     public Workout(int id, int memberId, String type) {
@@ -65,7 +65,7 @@ public class Workout {
     }
 
     public void setDuration(int duration) {
-        if (duration > 0) {
+        if (duration < 0) {
             throw new IllegalArgumentException("Invalid duration!");
         }
 
