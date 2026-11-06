@@ -38,5 +38,7 @@ public class Main {
         System.out.println(fitnessClubService.getActiveMembers());
         System.out.println(workoutService.getWorkoutsLongerThan(50));
         System.out.println(workoutService.calculateTotalDistance());
+        System.out.println(workoutService.calculateTotalDistanceForMember(1));
+        System.out.println(workoutService.calculateAverageSpeed(40.0, 50));
     }
 }
