@@ -24,7 +24,7 @@ public class Person {
     }
 
     public void setName(String name) {
-        if (name == null || name.isBlank()) {
+        if (name.isBlank() || name == null) {
             throw new IllegalArgumentException("Invalid name!");
         }
 
