@@ -18,7 +18,7 @@ public class Workout {
         }
 
         this.memberId = memberId;
-        this.type = type;
+        setType(type);
         setDistance(distance);
         setDuration(duration);
     }
@@ -53,7 +53,7 @@ public class Workout {
     }
 
     public void setDistance(double distance) {
-        if (distance < 0.0) {
+        if (distance < 0.0 || !Double.isFinite(distance)) {
             throw new IllegalArgumentException("distance cannot be negative");
         }
 
@@ -65,7 +65,7 @@ public class Workout {
     }
 
     public void setDuration(int duration) {
-        if (duration < 0) {
+        if (duration <= 0) {
             throw new IllegalArgumentException("Invalid duration!");
         }
 
