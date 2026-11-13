@@ -24,7 +24,7 @@ public class Person {
     }
 
     public void setName(String name) {
-        if (name.isBlank() || name == null) {
+        if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Invalid name!");
         }
 
@@ -42,5 +42,9 @@ public class Person {
         }
 
         this.age = age;
+    }
+
+    public String getRole() {
+        return "Person";
     }
 }

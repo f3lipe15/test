@@ -15,7 +15,7 @@ public class Trainer extends Person{
     }
 
     public void setSpecialization(String specialization) {
-        if (specialization.isBlank() || specialization == null) {
+        if (specialization == null || specialization.isBlank()) {
             throw new IllegalArgumentException("Specialization cannot be blank");
         }
 
@@ -27,10 +27,15 @@ public class Trainer extends Person{
     }
 
     public void setExperienceYears(int experienceYears) {
-        if (experienceYears <= 0) {
+        if (experienceYears < 0) {
             throw new IllegalArgumentException("Experience years must be greater than 0!");
         }
 
         this.experienceYears = experienceYears;
+    }
+
+    @Override
+    public String getRole() {
+        return "Trainer";
     }
 }
